@@ -14,14 +14,14 @@ public class ClassificationValue {
 	private int year;
 	private String district_name; //C1
 	private int district_code;
-	private LinkedHashMap<String, Integer> age_list; //C2
+	private LinkedHashMap<String, String> age_list; //C2
 	
 	ClassificationValue(){
-		age_list = new LinkedHashMap<String, Integer>();
+		age_list = new LinkedHashMap<String, String>();
 	}
 	
 	public void setInfo(String district_name, int min_age, int max_age, List<Map<String, Object>> json_data_list) {
-		HashMap<String, Integer> unsorted_age_list = new HashMap<String, Integer>();
+		HashMap<String, String> unsorted_age_list = new HashMap<String, String>();
 		for(Map<String, Object> json_data : json_data_list) {
 			if(json_data.get("OBJ_ID").toString().equals("A")) {
 				if(json_data.get("ITM_NM").toString().contains(district_name)) {
@@ -39,7 +39,7 @@ public class ClassificationValue {
 					continue;
 				}
 				if(age_int>=min_age && age_int<=max_age) {
-					unsorted_age_list.put(age_str, Integer.valueOf(json_data.get("ITM_ID").toString()));
+					unsorted_age_list.put(age_str, json_data.get("ITM_ID").toString());
 				}
 			}
 		}
@@ -47,14 +47,14 @@ public class ClassificationValue {
 		
 		for(int i=min_age; i<max_age; i++) {
 			try {
-				int value = unsorted_age_list.get(i+"세");
+				String value = unsorted_age_list.get(i+"세");
 			}catch(NullPointerException e) {
 				continue;
 			}
 			age_list.put(i+"세",unsorted_age_list.get(i+"세"));	
 		}
 		try {
-			int value = unsorted_age_list.get(max_age+"세이상");
+			String value = unsorted_age_list.get(max_age+"세이상");
 		}catch(NullPointerException e) {
 		}
 		age_list.put(max_age+"세이상",unsorted_age_list.get(max_age+"세이상"));	
@@ -66,8 +66,8 @@ public class ClassificationValue {
 	
 	public void PrintClassValue() {
 		System.out.println(district_name + "(" + district_code + ")");	
-		Set<Entry<String, Integer>> entries = age_list.entrySet();
-		for (Entry<String, Integer> entry : entries) {
+		Set<Entry<String, String>> entries = age_list.entrySet();
+		for (Entry<String, String> entry : entries) {
 			  System.out.println(entry.getKey() + "(" + entry.getValue().toString() + ")");
 		}
 	}

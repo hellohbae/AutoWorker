@@ -61,6 +61,23 @@ public class KosisApiCall2 {
 		
 		return readValue;
 	}
+	
+	public static String buildURL(String api_key, String table_id, String obj1_code, String obj2_code, String item_id, String year) {
+		String result_url = "http://kosis.kr/openapi/Param/statisticsParameterData.do?"
+				+ "method=getList"
+				+ "&apiKey=" + api_key
+				+ "&format=json&jsonVD=Y&orgId=101&loadGubun=2"
+				+ "&tblId=" + table_id
+				+ "&objL1=" + obj1_code
+				+ "&objL2=" + obj2_code
+				+ "&itmId=" + item_id
+				+ "&prdSe=Y&startPrdDe="+year+"&endPrdDe="+year;
+		
+		return result_url;
+	}
+	
+	//public static 
+	
 	/*
 	public static ArrayList<JSONObject> filterJson(JSONArray jsonArray, String filter_key, String filter_value) {
 		ArrayList<JSONObject> resultArray = new ArrayList<JSONObject>();
